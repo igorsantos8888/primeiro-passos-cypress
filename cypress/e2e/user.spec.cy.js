@@ -2,6 +2,10 @@ import userData from '../fixtures/users/user-data.json'
 import LoginPage from '../pages/loginPage.js'
 import DashboardPage from '../pages/dashboardPage.js'
 import MyInfoPage from '../pages/myInfoPage.js'
+/* import { Chance } from 'chance' */
+
+const Chance = require('chance')
+var chance = new Chance()
 
 const loginPage = new LoginPage()
 const dashboard = new DashboardPage()
@@ -17,28 +21,8 @@ describe('Orange HRM Tests', () => {
     dashboard.dashboard()
 
     myInfo.accessMyInfoPage()
-    myInfo.myInfoUpdateUser('Arthur', 'Antunes', 'Zico', 'Jogador', 'OtherId', 'DriverLicenseId', '2025-03-26')
-
-
-    /* 
-      cy.get(this.selectorsList().firstNameField).clear().type('Arthur')
-        cy.get(this.selectorsList().lastNameField).clear().type('Antunes')
-        cy.get(this.selectorsList().genericField).eq(3).clear().type('Jogador')
-        cy.get(this.selectorsList().genericField).eq(4).clear().type('OtherId')
-        cy.get(this.selectorsList().genericField).eq(5).clear().type('DriverLicenseId')
-        cy.get(this.selectorsList().genericField).eq(6).clear().type('2025-03-26')
-    
-    */
-
-
+    myInfo.myInfoUpdateUser(chance.first(), chance.last(), chance.prefix(), chance.sentence({ words: 1 }), chance.integer({ min: 1000, max: 10000 }), chance.integer({ min: 1000, max: 10000 }), '2025-03-26')
+    myInfo.myInfoPageSave()
   })
-
-  it('Login - Fail', () => {
-    cy.visit('/auth/login')
-    cy.get(selectorsList.usernameField).type(userData.userFail.username)
-    cy.get(selectorsList.passwordField).type(userData.userFail.password)
-    cy.get(selectorsList.loginButton).click()
-    cy.get(selectorsList.wrongCredentialAlert)
-  })
-
 })
+

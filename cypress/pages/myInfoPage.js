@@ -1,6 +1,7 @@
 class MyInfoPage {
     selectorsList() {
         const selectors = {
+            myInfoButton: '[href="/web/index.php/pim/viewMyDetails"]',
             firstNameField: '[name="firstName"]',
             lastNameField: '[name="lastName"]',
             middleNameField: '[name="middleName"]',
@@ -16,7 +17,7 @@ class MyInfoPage {
     }
 
     accessMyInfoPage() {
-        cy.visit('/pim/viewPersonalDetails/empNumber/7')
+        cy.get(this.selectorsList().myInfoButton).click()
     }
 
     myInfoUpdateUser(firstName, lastName, middleName, employeeId, otherId, driverLicenseNumber, licenseExpiryDate 
@@ -28,7 +29,7 @@ class MyInfoPage {
         cy.get(this.selectorsList().genericField).eq(4).clear().type(otherId)
         cy.get(this.selectorsList().genericField).eq(5).clear().type(driverLicenseNumber)
         cy.get(this.selectorsList().genericField).eq(6).clear().type(licenseExpiryDate)
-        cy.get(this.selectorsList().dateCloseButton).click()
+       // cy.get(this.selectorsList().dateCloseButton).click()
 
 
         cy.get(this.selectorsList().genericCombobox).eq(0).click({ force: true })
@@ -37,6 +38,10 @@ class MyInfoPage {
         cy.get(this.selectorsList().genericCombobox).eq(1).click({ force: true })
         cy.get('.oxd-select-dropdown > :nth-child(2)').click()
 
+        
+    }
+
+    myInfoPageSave() {
         cy.get(this.selectorsList().submitButtonSave).eq(0).click({ force: true })
         cy.get('body').should('contain', 'Successfully Updated')
         cy.get(this.selectorsList().mesageClose)
